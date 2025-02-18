@@ -9,10 +9,39 @@ import productServices from "../services/product.services";
 import { statusCodes } from "../utils/statusCodes";
 import allMessages from "../utils/allMessages";
 import { Product } from "../models/product.model";
+import { uploadToCloudinary } from "../utils/cloudinary";
 
 export const addProduct = async (req: Request, res: Response) => {
   try {
-    const validatedData = productSchema.parse(req.body);
+    if (!req.files) {
+      return errorResponse(res, statusCodes.BAD_REQUEST, "No files uploaded");
+    }
+    const files = req.files as { [fieldname: string]: Express.Multer.File[] };
+
+    let thumbnail = "";
+    let imageUrls: string[] = [];
+    if (files.thumbnail && files.thumbnail.length > 0) {
+      thumbnail = await uploadToCloudinary(
+        files.thumbnail[0].buffer,
+        "products"
+      );
+    }
+
+    if (files.imageUrls && files.imageUrls.length > 0) {
+      imageUrls = await Promise.all(
+        files.imageUrls.map((file) =>
+          uploadToCloudinary(file.buffer, "products")
+        )
+      );
+    }
+    const parsedData = {
+      ...req.body,
+      imageUrls,
+      thumbnail,
+      price: Number(req.body.price),
+      countInStock: Number(req.body.countInStock),
+    };
+    const validatedData = productSchema.parse(parsedData);
     const userId = req.user?.id;
     if (!userId) {
       return errorResponse(

@@ -6,12 +6,12 @@ export const productSchema = z.object({
   description: z.string().min(10),
   category: z.string().min(3),
   brand: z.string().min(3),
-  image: z.array(z.string()),
+  imageUrls: z.array(z.string()),
   thumbnail: z.string(),
   countInStock: z.number().positive(),
-  rating: z.number().positive(),
-  numReviews: z.number().positive(),
-  reviews: z.array(z.string()),
+  rating: z.number().positive().optional(),
+  numReviews: z.number().positive().optional(),
+  reviews: z.array(z.string()).optional(),
 });
 
 export type ProductInputTypes = z.infer<typeof productSchema>;
