@@ -2,13 +2,14 @@ import mongoose from "mongoose";
 import { ProductInputTypes } from "../validations/product";
 import { Product } from "../models/product.model";
 import { Response } from "express";
-import { errorResponse } from "../utils/commonResponse";
 import slugify from "slugify";
 import multer from "multer";
+import { ApiError } from "../utils/ApiError";
+import { statusCodes } from "../utils/statusCodes";
+import allMessages from "../utils/allMessages";
 
 const productServices = {
   addProduct: async (
-    res: Response,
     product: ProductInputTypes,
     userId: mongoose.Types.ObjectId
   ) => {
@@ -25,7 +26,10 @@ const productServices = {
       createdBy: userId,
     });
     if (!newProduct) {
-      return errorResponse(res, 400, "Product not created");
+      throw new ApiError(
+        statusCodes.BAD_REQUEST,
+        allMessages.error.somethingWrong
+      );
     }
     await newProduct.save();
     return newProduct;
