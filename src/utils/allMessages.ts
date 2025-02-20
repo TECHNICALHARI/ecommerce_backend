@@ -76,6 +76,7 @@ const allMessages = {
     weakPassword: "Password must be at least 8 characters long",
     invalidDosage: "Invalid dosage format",
     invalidQuantity: "Invalid medicine quantity",
+    iconRequired: "Icon is required"
   },
   product: {
     created: "Product added successfully",

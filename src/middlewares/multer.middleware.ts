@@ -11,7 +11,8 @@ const imageFilter = (req: any, file: any, cb: any) => {
 };
 
 export const upload = multer({ storage, fileFilter: imageFilter, limits: { fileSize: 5 * 1024 * 1024 } });
-export const uploadSingleImage = upload.single("thumbnail");
+export const uploadSingleImage = upload.single("image");
+// export const uploadSingleImage = (fieldName: string) => upload.single(fieldName);
 export const uploadMultipleImages = upload.fields([
   { name: "thumbnail", maxCount: 1 },
   { name: "imageUrls", maxCount: 5 },

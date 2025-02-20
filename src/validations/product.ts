@@ -14,4 +14,13 @@ export const productSchema = z.object({
   reviews: z.array(z.string()).optional(),
 });
 
+export const categorySchema = z.object({
+  name: z.string(),
+});
+export const brandSchema = z.object({
+  name: z.string(),
+});
+
 export type ProductInputTypes = z.infer<typeof productSchema>;
+export type categoryTypes = z.infer<typeof categorySchema>;
+export type brandTypes = z.infer<typeof brandSchema>;
