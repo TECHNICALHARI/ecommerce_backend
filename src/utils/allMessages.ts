@@ -76,7 +76,7 @@ const allMessages = {
     weakPassword: "Password must be at least 8 characters long",
     invalidDosage: "Invalid dosage format",
     invalidQuantity: "Invalid medicine quantity",
-    iconRequired: "Icon is required"
+    iconRequired: "Icon is required",
   },
   product: {
     created: "Product added successfully",
@@ -106,16 +106,17 @@ const allMessages = {
     alreadyExists: "Resource already exists",
     prescriptionRequired: "Prescription is mandatory for this purchase",
     somethingWrong: "Something went wrong!",
-    noFiles: "No files uploaded"
+    noFiles: "No files uploaded",
+    invalidId: "Invalid ID provided.",
   },
 
   // Success Messages
   success: {
+    fetched: "Data fetched successfully",
     created: "Created successfully",
     updated: "Updated successfully",
     deleted: "Deleted successfully",
   },
-
 };
 
 export default allMessages;
