@@ -15,11 +15,12 @@ export const productSchema = z.object({
 });
 
 export const categorySchema = z.object({
-  name: z.string(),
+  name: z.string().min(3),
   id:z.string().optional()
 });
 export const brandSchema = z.object({
-  name: z.string(),
+  name: z.string().min(3),
+  id: z.string().optional()
 });
 
 export type ProductInputTypes = z.infer<typeof productSchema>;

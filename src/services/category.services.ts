@@ -8,6 +8,13 @@ import { categoryTypes } from "../validations/product";
 const categoryServices = {
   addCategory: async (data: categoryTypes, files: any) => {
     const { name } = data;
+    const allreadyExists = await Category.findOne({ name });
+    if (allreadyExists) {
+      throw new ApiError(
+        statusCodes.BAD_REQUEST,
+        allMessages.error.alreadyExists
+      );
+    }
     let icon = "";
     if (files.icon) {
       icon = await uploadToCloudinary(files.icon[0].buffer, "category");
@@ -16,13 +23,6 @@ const categoryServices = {
       throw new ApiError(
         statusCodes.BAD_REQUEST,
         allMessages.validation.iconRequired
-      );
-    }
-    const allreadyExists = await Category.findOne({ name });
-    if (allreadyExists) {
-      throw new ApiError(
-        statusCodes.BAD_REQUEST,
-        allMessages.error.alreadyExists
       );
     }
     const category = await Category.create({ name, icon });

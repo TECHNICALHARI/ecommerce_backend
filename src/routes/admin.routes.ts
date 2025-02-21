@@ -5,7 +5,7 @@ import { authMiddleware, verifyRoles } from "../middlewares/auth.middleware";
 import { UserRole } from "../models/user.model";
 import { loginSchema, registerSchema } from "../validations/auth";
 import validate from "../middlewares/zodMiddleware";
-import { categorySchema } from "../validations/product";
+import { brandSchema, categorySchema } from "../validations/product";
 import {
   createCategory,
   deleteCategory,
@@ -13,6 +13,12 @@ import {
   updateCategory,
 } from "../controllers/category.controller";
 import { uploadImages } from "../middlewares/multer.middleware";
+import {
+  addBrand,
+  deleteBrand,
+  getBrand,
+  updateBrand,
+} from "../controllers/brand.controller";
 
 const adminRoutes = express.Router();
 
@@ -52,6 +58,34 @@ adminRoutes.delete(
   authMiddleware,
   verifyRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
   deleteCategory
+);
+adminRoutes.post(
+  "/brand",
+  authMiddleware,
+  verifyRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
+  uploadImages(["icon"]),
+  validate(brandSchema),
+  addBrand
+);
+adminRoutes.put(
+  "/brand",
+  authMiddleware,
+  verifyRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
+  uploadImages(["icon"]),
+  validate(brandSchema),
+  updateBrand
+);
+adminRoutes.get(
+  "/brand",
+  authMiddleware,
+  verifyRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
+  getBrand
+);
+adminRoutes.delete(
+  "/brand",
+  authMiddleware,
+  verifyRoles([UserRole.ADMIN, UserRole.SUPER_ADMIN]),
+  deleteBrand
 );
 
 export default adminRoutes;
