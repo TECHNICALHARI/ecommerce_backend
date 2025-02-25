@@ -2,7 +2,8 @@ import { z } from "zod";
 
 export const productSchema = z.object({
   name: z.string().min(3),
-  price: z.number().positive(),
+  mrp: z.number().positive(),
+  saleRate: z.number().positive(),
   description: z.string().min(10),
   category: z.string().min(3),
   brand: z.string().min(3),
@@ -12,15 +13,17 @@ export const productSchema = z.object({
   rating: z.number().positive().optional(),
   numReviews: z.number().positive().optional(),
   reviews: z.array(z.string()).optional(),
+  createdBy: z.string().optional(),
+  slug: z.string().optional(),
 });
 
 export const categorySchema = z.object({
   name: z.string().min(3),
-  id:z.string().optional()
+  id: z.string().optional(),
 });
 export const brandSchema = z.object({
   name: z.string().min(3),
-  id: z.string().optional()
+  id: z.string().optional(),
 });
 
 export type ProductInputTypes = z.infer<typeof productSchema>;
